@@ -1,0 +1,292 @@
+From: "Saved by Internet Explorer 11"
+Subject: Project 1: Hash Analysis
+Date: Sat, 6 Sep 2014 08:14:33 -0400
+MIME-Version: 1.0
+Content-Type: multipart/related;
+	type="text/html";
+	boundary="----=_NextPart_000_0000_01CFC9AA.975D9670"
+X-MimeOLE: Produced By Microsoft MimeOLE V6.3.9600.16384
+
+This is a multi-part message in MIME format.
+
+------=_NextPart_000_0000_01CFC9AA.975D9670
+Content-Type: text/html;
+	charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://www.cs.fsu.edu/~lacher/courses/COP4531/assigns/proj1c.html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML><HEAD><META content=3D"IE=3D5.0000" =
+http-equiv=3D"X-UA-Compatible">
+
+<META http-equiv=3D"Content-Type" content=3D"text/html; =
+charset=3Dwindows-1252">=20
+<META name=3D"GENERATOR" content=3D"MSHTML 11.00.9600.17239"> =
+<TITLE>Project 1: Hash=20
+Analysis</TITLE>=20
+<STYLE type=3D"text/css">=0A=
+<!-- @import "http://www.cs.fsu.edu/~lacher/styles/RCLstyle1.css"; -->=0A=
+</STYLE>
+ </HEAD>=20
+<BODY link=3D"black" alink=3D"#808080" vlink=3D"black"><!--=0A=
+<h1><font color=3D#990000>=0A=
+<center>=0A=
+Notice!<br>=0A=
+This document is still under development. The general expectations will =
+not=0A=
+change, but some details are yet to be specified. =0A=
+</font></h1>=0A=
+</center>=0A=
+--> <!--=0A=
+<center>=0A=
+<h1><font color=3D#990000>=0A=
+This document is officially released and open for comment.=0A=
+</font></h1>=0A=
+</center>=0A=
+-->=20
+<CENTER>
+<H1>Project 1: Hash Analysis</H1></CENTER>
+<CENTER>
+<H2><EM>Analysis Methodology for Hash Tables </EM></H2></CENTER>
+<P><B>Educational Objectives:</B> After completing this assignment, the =
+student=20
+should be able to accomplish the following:  </P>
+<UL>
+  <LI>Describe and explain in detail the concept of hash table</LI>
+  <LI>Implement hash tables as vector of lists</LI>
+  <LI>Define and implement the ADT Table using a private hash table=20
+  structure</LI>
+  <LI>Define and implement bidirectional iterator class for this =
+implementation=20
+  of Table</LI>
+  <LI>Calculate the theoretical bucket size distribution for Simple =
+Uniform
+   Hashing and a given table size</LI>
+  <LI>Calculate the actual bucket size distribution for a given instance =
+of a=20
+  hash table</LI>
+  <LI>Add methods to <TT>fsu::HashTable</TT> performing these=20
+calculations</LI></UL>
+<P><STRONG>Operational Objectives:</STRONG> Add two methods to the class =
+
+template <TT>HashTable&lt;K,T,H&gt;</TT>: </P>
+<BLOCKQUOTE>
+<PRE>size_t  HashTable&lt;K,T,H&gt;::MaxBucketSize () const;=0A=
+void    HashTable&lt;K,T,H&gt;::Analysis      (std::ostream&amp; os) =
+const;=0A=
+</PRE></BLOCKQUOTE>
+<P>conforming to the requirements and specifications given below.</P>
+<P><STRONG>Deliverables:</STRONG> One file: </P>
+<BLOCKQUOTE>
+<PRE>hashtbl.cpp  # contains implementations MaxBucketSize and Analysis=0A=
+</PRE></BLOCKQUOTE>
+<P>Note this is a slave file for <TT>hashtbl.h</TT>.=20
+<H2>Procedural Requirements</H2>
+<OL type=3D"1">
+  <LI>
+  <P>The official development, testing, and assessment environment is  =
+<TT>g++47=20
+  -std=3Dc++11 -Wall -Wextra</TT> on the <TT>linprog</TT> machines. Code =
+should=20
+  compile without error or warning. </P></LI>
+  <LI>
+  <P>Begin by copying the following files from the course directory into =
+your=20
+  <TT>proj1</TT> directory: </P>
+  <BLOCKQUOTE>
+<PRE>LIB/proj1/hashtbl-stub.cpp      # slave file - stubbed versions of =
+Analysis and MaxBucketSize=0A=
+LIB/proj1/makefile              # builds most executables=0A=
+LIB/proj1/proj1submit.sh        # submit script=0A=
+LIB/tcpp/hashtbl.h              # HashTable&lt;&gt; and =
+HashTableIterator&lt;&gt;, except Analysis and MaxBucketSize=0A=
+LIB/tests/fhtbl.cpp             # test harness for hash tables=0A=
+LIB/tests/hashcalc.cpp          # calculates hash values interactively=0A=
+LIB/tests/hasheval.cpp          # test focusing specifically on Analysis=0A=
+LIB/tests/rantable.cpp          # creates random <string, int=3D""> =
+table data =0A=
+LIB/area51/fhtblKISS.x          # linprog/Intel/Linux executables=0A=
+LIB/area51/fhtblMM.x=0A=
+LIB/area51/fhtblSimple.x=0A=
+LIB/area51/rantable.x=0A=
+LIB/area51/hashcalc.x=0A=
+LIB/area51/hashevalKISS.x=0A=
+LIB/area51/hashevalMM.x=0A=
+LIB/area51/hashevalSimple.x=0A=
+</string,></PRE></BLOCKQUOTE>
+  <P>The executables in <TT> area51</TT> are distributed only for your=20
+  information and experimentation. You have the source code for these =
+(except=20
+  for <TT>hashtbl.cpp</TT>) and can build these to test your own code. =
+</P>
+  <P>The file <TT>hashtbl.h</TT> is copied ONLY FOR YOUR CONVENIENCE. =
+Note this=20
+  file is NOT submitted to your portfolio, so any code you write must =
+deal with=20
+  this file as it currently exists in the course library at the time. It =
+is a=20
+  good idea to rename this to "hashtbl.header" just to ensure that your =
+code is=20
+  reading the file from the library. </P></LI>
+  <LI>
+  <P>Your file <TT>hashtbl.cpp</TT> should contain implementations of =
+Analysis=20
+  and MaxBucketSize. </P></LI>
+  <P>
+  <LI>Copy the file <TT>proj1submit.sh</TT> into your project directory, =
+change=20
+  its permissions to executable, and  submit the project by executing =
+the=20
+  script.=20
+  <P></P>
+  <P><EM><B>Warning:</B> Submit scripts do not work on the =
+<TT>program</TT> and=20
+  <TT>linprog</TT> servers. Use <TT>shell.cs.fsu.edu</TT> to submit =
+projects. If=20
+  you do not receive the second confirmation with the contents of your =
+project,=20
+  there has been a malfunction.</EM> </P></LI></OL>
+<H2>Code Requirements and Specifications - MaxBucketSize and =
+Analysis</H2>
+<OL type=3D"1">
+  <LI>
+  <P>MaxBucketSize should return the size of the largest bucket in the =
+hash
+   table instance.</P></LI>
+  <LI>
+  <P>Analysis should result in a display (to the std::ostream passed in) =
+as
+   illustrated here: </P>
+  <BLOCKQUOTE>
+<PRE>      table size:           9997=0A=
+      number of buckets:    9973=0A=
+        nonempty buckets:   6326=0A=
+        max bucket size:    7=0A=
+      expected search time: 2.00=0A=
+        actual search time: 2.58=0A=
+=0A=
+bucket size distributions=0A=
+-------------------------=0A=
+      size       actual         theory (uniform random distribution)=0A=
+      ----       ------         ------=0A=
+         0         3647         3659.9=0A=
+         1         3685         3669.0=0A=
+         2         1846         1838.9=0A=
+         3          608          614.4=0A=
+         4          145          153.9=0A=
+         5           37           30.9=0A=
+         6            4            5.2=0A=
+         7            1            0.7=0A=
+         8                         0.1=0A=
+</PRE></BLOCKQUOTE>
+  <P>This display shows the size of the table, number of buckets, number =
+of
+   non-empty buckets, max bucket size, expected search time [1 + (table
+   size)/(number of buckets)], actual average search time [1 + (table=20
+  size)/(number of non-empty buckets)]. Then a tabular printout of the =
+bucket=20
+  size distribution follows, showing the bucket size, actual number of =
+buckets=20
+  of that size, and the expected number for simple uniform hashing. The =
+table=20
+  print terminates for bucket size <I>n</I> when there are no buckets of =
+size=20
+  &gt; <I>n</I> and the theoretical size is &lt; 0.05. Display the =
+theoretical=20
+  sizes to the nearest tenth as depicted above. </P></LI>
+  <LI>
+  <P>Use the algorithms you developed in Assignment 1.</P></LI>
+  <LI>
+  <P>Thoroughly test your implementation for correct functionality using =
+the=20
+  provided test clients <TT>fhtbl.cpp</TT> and <TT>hasheval.cpp</TT> =
+using a=20
+  variety of tables you create with <TT>rantable.cpp</TT>. Be sure to =
+test using=20
+  variations:</P>
+  <OL type=3D"i">
+    <LI>Tables of various sizes, small to very large (at least =
+1,000,000)</LI>
+    <LI>Varieties of hash functions (three are provided: KISS, MM, and=20
+    Simple)</LI>
+    <LI>Load factor =3D <I>n</I>/<I>b</I> =3D ratio of table size to =
+(approximate)=20
+    number of buckets (0.1, 1.0, 10.0 100.0 are suggested)</LI>
+    <LI>Prime / nonprime number of buckets</LI></OL>
+  <P>The test harnesses <TT>fhtbl.cpp</TT> and <TT>hasheval.cpp</TT> are =
+easily=20
+  changed via comment/uncomment of typedefs to accomodate the variations =
+in hash=20
+  functions. The prime/non-prime number of buckets is a constructor =
+argument=20
+  (default value "true" meaning prime number of buckets).  </P></LI>
+  <LI>
+  <P>Write a short summary giving your experience and lessons learned =
+during the=20
+  testing of variations as above. Turn this in as an addendum to =
+Assignment=20
+  1.</P></LI></OL>
+<H2>Hints</H2>
+<UL>
+  <LI>
+  <P>Use Assignment 1 # 3 as a check for internal consistency during =
+Analysis.=20
+  </P></LI>
+  <LI>
+  <P>Use Assignment 1 # 7 to calculate the theoretical bucket size =
+distribution.=20
+  </P></LI>
+  <LI>
+  <P>Use a vector sizeCount[k] to accumulate number of actual buckets of =
+ size k
+   during a single pass through the buckets. =
+</P></LI></UL></BODY></HTML>
+
+------=_NextPart_000_0000_01CFC9AA.975D9670
+Content-Type: text/css;
+	charset="windows-1256"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://www.cs.fsu.edu/~lacher/styles/RCLstyle1.css
+
+pre {
+	font-family: Courier New, Fixedsys; font-size: 10pt;
+}
+tt {
+	font-family: Courier New, Fixedsys; font-size: 10pt;
+}
+p {
+	font-family: Verdana, sans-serif; font-size: 10pt;
+}
+h1 {
+	font-family: Verdana, sans-serif; font-size: 12pt; font-weight: bold;
+}
+h2 {
+	font-family: Verdana, sans-serif; font-size: 10pt; font-weight: bold;
+}
+h3 {
+	font-family: Verdana, sans-serif; font-size: 10pt; font-weight: bold;
+}
+ul {
+	font-family: Verdana, sans-serif; font-size: 10pt;
+}
+li {
+	font-family: Verdana, sans-serif; font-size: 10pt;
+}
+dl {
+	font-family: Verdana, sans-serif; font-size: 10pt;
+}
+dt {
+	font-family: Verdana, sans-serif; font-size: 10pt;
+}
+dd {
+	font-family: Verdana, sans-serif; font-size: 10pt;
+}
+em {
+	color: rgb(153, 0, 0); font-family: Verdana, sans-serif; font-style: =
+italic;
+}
+td {
+	font-family: Verdana, sans-serif; font-size: 10pt;
+}
+
+------=_NextPart_000_0000_01CFC9AA.975D9670--
